@@ -1,2 +1,2 @@
-# Cgi.nasm
-Nasm elf runing on cgi runing on host
+# root.nasm
+Nasm elf runing on isolate command root
