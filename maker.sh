@@ -3,7 +3,7 @@ roots=$(pwd)/roots
 tmps=/tmp/lists.txt
 tmps2=/tmp/lists2.txt
 nasm -f elf32 -o mys ./cgi-bin/nasm.asm
-ld -o my mys
+gcc mys ./cgi-bin/my.c -o my
 mkdir -p $roots
 mkdir -p $roots/usr
 mkdir -p $roots/usr/bin
@@ -137,7 +137,6 @@ while IFS= read -r l1
 do
 
 rt="$roots$l1"
-printf "$rt\n"
 cp "$l1" "$rt" 
 done < "$tmps2"
 
