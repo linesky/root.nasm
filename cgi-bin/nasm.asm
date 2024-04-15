@@ -6,6 +6,7 @@ global strcps
 global strcats
 global strncps
 global memcps
+global prints
 ;nasm -felf32 -o hello.o hello.asm
 ;gcc hello.o -o hello.elf -nostdlib
 section .text
@@ -92,6 +93,18 @@ fputss:
     mov edx, [esp+8]  ; tamanho da mensagem
     int 0x80          ; chama a interrupção do sistema
     ret
+prints:
+    mov eax, 4        ; syswrite
+    mov ebx, 1        ; stdout
+    mov ecx, [esp+4] ; endereço da mensagem
+    mov edx, [esp+8]  ; tamanho da mensagem
+    int 0x80          ; chama a interrupção do sistema
+    mov eax, 4        ; syswrite
+    mov ebx, 1        ; stdout
+    mov ecx, enters ; endereço da mensagem
+    mov edx, 1  ; tamanho da mensagem
+    int 0x80          ; chama a interrupção do sistema
+    ret
 putss:
     mov eax, 4        ; syswrite
     mov ebx, 1        ; stdout
@@ -107,3 +120,4 @@ exitss:    ; Finalização do programa
 section .data
 db 0
 stdouts: dd 1
+enters: db 10
