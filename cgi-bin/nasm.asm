@@ -2,9 +2,27 @@ global putss
 global exitss
 global strlens
 global strcps
+global strcats
 ;nasm -felf32 -o hello.o hello.asm
 ;gcc hello.o -o hello.elf -nostdlib
 section .text
+strcats:
+    mov esi, [esp+8]  ; endereço da mensagem
+    mov edi, [esp+4]  ; endereço da mensagem
+    strcats2:
+        mov al,[edi]
+        inc edi
+        cmp al,0
+        jnz strcats2
+     dec edi
+     strcats3:
+        mov al,[esi]
+        mov [edi],al
+        inc esi
+        inc edi
+        cmp al,0
+        jnz strcats3
+    ret
 strcps:
     mov esi, [esp+8]  ; endereço da mensagem
     mov edi, [esp+4]  ; endereço da mensagem
