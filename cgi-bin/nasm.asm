@@ -8,9 +8,25 @@ global strcats
 global strncps
 global memcps
 global prints
+global memfills
 ;nasm -felf32 -o hello.o hello.asm
 ;gcc hello.o -o hello.elf -nostdlib
 section .text
+memfills:
+    
+    mov edi, [esp+4]  ; endereço da mensagem
+    mov ecx, [esp+8] ;size
+    mov al, [esp+12] ;char
+    cmp ecx,0
+    jz memfills3
+    memfills2:
+        mov [edi],al
+        inc edi
+        dec ecx
+        cmp ecx,0
+        jnz memfills2
+    memfills3:
+    ret
 memcps:
     mov esi, [esp+8]  ; endereço da mensagem
     mov edi, [esp+4]  ; endereço da mensagem

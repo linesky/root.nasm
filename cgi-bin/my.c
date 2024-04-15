@@ -8,16 +8,18 @@ extern int strncps(char *msg,char *msg2,int counts);
 extern int strcats(char *msg,char *msg2);
 extern void exitss(int codes);
 extern int memcps(char *msg,char *msg2,int counts);
+extern int memfills(char *msg,int counts,char msg2);
 int stdouts=1;
 int main(){
-   char *msgd="\x1b[43;37mhello world.\n";
+   char *msgd="\x1b[43;37m";
    char msgd2[1080];
-   int sizes = strlens(msgd)+1;
+   int sizes = strlens(msgd);
+   prints(msgd,sizes);
    int rets = 0;
-   memcps(msgd2,msgd,sizes);
-   
-   sizes = strlens(msgd2);
-   writess(msgd2,sizes,stdouts);
+   prints(msgd,sizes);
+   sizes = 80;
+   memfills(msgd2,sizes,'*');
+   prints(msgd2,sizes);
    exitss(rets);
    return 0;
    
