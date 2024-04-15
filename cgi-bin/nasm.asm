@@ -4,9 +4,26 @@ global strlens
 global strcps
 global strcats
 global strncps
+global memcps
 ;nasm -felf32 -o hello.o hello.asm
 ;gcc hello.o -o hello.elf -nostdlib
 section .text
+memcps:
+    mov esi, [esp+8]  ; endereço da mensagem
+    mov edi, [esp+4]  ; endereço da mensagem
+    mov ecx, [esp+12] ;size
+    cmp ecx,0
+    jz strncps3
+    memcps2:
+        mov al,[esi]
+        mov [edi],al
+        inc esi
+        inc edi
+        dec ecx
+        cmp ecx,0
+        jnz memcps2
+    memcps3:
+    ret
 strncps:
     mov esi, [esp+8]  ; endereço da mensagem
     mov edi, [esp+4]  ; endereço da mensagem
