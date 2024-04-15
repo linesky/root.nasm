@@ -1,8 +1,21 @@
 global putss
 global exitss
+global strlens
 ;nasm -felf32 -o hello.o hello.asm
 ;gcc hello.o -o hello.elf -nostdlib
 section .text
+strlens:
+    mov ebx, [esp+4]  ; endereço da mensagem
+    mov ecx,0 ; tamanho da mensagem
+    dec ecx
+    strlens2:
+        mov al,[ebx]
+        inc ebx
+        inc ecx
+        cmp al,0
+        jnz strlens2
+    mov eax,ecx
+    ret
     ; Código de exemplo: imprimir uma mensagem
 putss:
     mov eax, 4        ; syswrite
