@@ -10,11 +10,11 @@ putss:
     mov ecx, [esp+4] ; endereço da mensagem
     mov edx, [esp+8]  ; tamanho da mensagem
     int 0x80          ; chama a interrupção do sistema
-
+    ret
 exitss:    ; Finalização do programa
     mov eax, 1        ; sys_exit
     mov ebx,[esp+4]      ; código de saída 0
     int 0x80          ; chama a interrupção do sistema
-
+    ret
 section .data
 db 0
