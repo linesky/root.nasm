@@ -1,4 +1,5 @@
 global putss
+global fputss
 global exitss
 global strlens
 global strcps
@@ -59,6 +60,7 @@ strcats:
         cmp al,0
         jnz strcats3
     ret
+    
 strcps:
     mov esi, [esp+8]  ; endereço da mensagem
     mov edi, [esp+4]  ; endereço da mensagem
@@ -83,6 +85,13 @@ strlens:
     mov eax,ecx
     ret
     ; Código de exemplo: imprimir uma mensagem
+fputss:
+    mov eax, 4        ; syswrite
+    mov ebx, [esp+12]  ; stdout
+    mov ecx, [esp+4] ; endereço da mensagem
+    mov edx, [esp+8]  ; tamanho da mensagem
+    int 0x80          ; chama a interrupção do sistema
+    ret
 putss:
     mov eax, 4        ; syswrite
     mov ebx, 1        ; stdout
@@ -97,3 +106,4 @@ exitss:    ; Finalização do programa
     ret
 section .data
 db 0
+stdouts: dd 1
