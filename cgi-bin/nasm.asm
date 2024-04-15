@@ -1,3 +1,4 @@
+global writess
 global putss
 global fputss
 global exitss
@@ -86,6 +87,13 @@ strlens:
     mov eax,ecx
     ret
     ; Código de exemplo: imprimir uma mensagem
+writess:
+    mov eax, 4        ; syswrite
+    mov ebx, [esp+12]  ; stdout
+    mov ecx, [esp+4] ; endereço da mensagem
+    mov edx, [esp+8]  ; tamanho da mensagem
+    int 0x80          ; chama a interrupção do sistema
+    ret
 fputss:
     mov eax, 4        ; syswrite
     mov ebx, [esp+12]  ; stdout
