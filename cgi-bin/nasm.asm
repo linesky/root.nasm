@@ -15,9 +15,20 @@ global fgetss
 global creatss
 global closess
 global strchrreplace
+global openss
+global getreadss
+global getwritess
+global getreadwritess
 ;nasm -felf32 -o hello.o hello.asm
 ;gcc hello.o -o hello.elf -nostdlib
 section .text
+openss:
+    mov eax, 5       ; syswrite
+    mov ebx, [esp+4]  ; stdout
+    mov ecx, [esp+8] ; endereço da mensagem
+    mov ecx, [esp+12] ; endereço da mensagem
+    int 0x80          ; chama a interrupção do sistema
+    ret
 closess:
     mov eax, 6        ; syswrite
     mov ebx, [esp+4]  ; stdout
@@ -35,6 +46,18 @@ getin:
     ret
 getout:
     mov ebx,stdoutss
+    mov eax,[ebx]
+    ret
+getreadss:
+    mov ebx,readsss
+    mov eax,[ebx]
+    ret
+getwritess:
+    mov ebx,writesss
+    mov eax,[ebx]
+    ret
+getreadswritess:
+    mov ebx,readwritesss
     mov eax,[ebx]
     ret
 strchrreplace:
@@ -195,4 +218,7 @@ section .data
 db 0
 stdoutss: dd 1
 stdinss: dd 2
+readsss: dd 0
+writesss: dd 1
+readwritesss: dd 2
 enters: db 10
