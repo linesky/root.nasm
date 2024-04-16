@@ -1,6 +1,6 @@
-extern void putss(char *msg,int sizes );
-extern void prints(char *msg,int sizes );
-extern void fputss(char *msg,int sizes,int handler );
+extern void putss(char *msg);
+extern void prints(char *msg);
+extern void fputss(char *msg,int handler );
 extern void fgetss(char *msg,int sizes,int handler );
 extern void writess(char *msg,int sizes,int handler );
 extern int creatss(char *msg,int acesss );
@@ -32,7 +32,7 @@ int main(){
    strcps(msgd2,msgd);
    strcats(msgd2,msgd3);
    sizes = strlens(msgd2);
-   putss(msgd2,sizes);
+   fputss(msgd2,getout());
    exitss(rets);
    return 0;
    

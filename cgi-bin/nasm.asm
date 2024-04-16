@@ -212,17 +212,39 @@ fgetss:
     int 0x80          ; chama a interrupção do sistema
     ret
 fputss:
+    mov edi, [esp+4]  ; endereço da mensagem
+    mov esi, [esp+4]  ; endereço da mensagem
+    mov ecx,0xffff ; tamanho da mensagem
+    cld
+    mov eax,0
+    fputss4:
+        repnz
+        scasb
+    mov eax,0xffff
+    clc
+    sub eax,ecx
+    mov edx,eax
     mov eax, 4        ; syswrite
-    mov ebx, [esp+12]  ; stdout
+    mov ebx, [esp+8]  ; stdout
     mov ecx, [esp+4] ; endereço da mensagem
-    mov edx, [esp+8]  ; tamanho da mensagem
     int 0x80          ; chama a interrupção do sistema
     ret
 prints:
+    mov edi, [esp+4]  ; endereço da mensagem
+    mov esi, [esp+4]  ; endereço da mensagem
+    mov ecx,0xffff ; tamanho da mensagem
+    cld
+    mov eax,0
+    prints4:
+        repnz
+        scasb
+    mov eax,0xffff
+    clc
+    sub eax,ecx
+    mov edx,eax
     mov eax, 4        ; syswrite
     mov ebx, 1        ; stdout
     mov ecx, [esp+4] ; endereço da mensagem
-    mov edx, [esp+8]  ; tamanho da mensagem
     int 0x80          ; chama a interrupção do sistema
     mov eax, 4        ; syswrite
     mov ebx, 1        ; stdout
@@ -231,10 +253,21 @@ prints:
     int 0x80          ; chama a interrupção do sistema
     ret
 putss:
+    mov edi, [esp+4]  ; endereço da mensagem
+    mov esi, [esp+4]  ; endereço da mensagem
+    mov ecx,0xffff ; tamanho da mensagem
+    cld
+    mov eax,0
+    putss4:
+        repnz
+        scasb
+    mov eax,0xffff
+    clc
+    sub eax,ecx
+    mov edx,eax
     mov eax, 4        ; syswrite
     mov ebx, 1        ; stdout
     mov ecx, [esp+4] ; endereço da mensagem
-    mov edx, [esp+8]  ; tamanho da mensagem
     int 0x80          ; chama a interrupção do sistema
     ret
 exitss:    ; Finalização do programa
