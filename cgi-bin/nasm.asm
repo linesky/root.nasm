@@ -119,21 +119,43 @@ strncps:
     strncps3:
     ret
 strcats:
+    mov edi, [esp+4]  ; endereço da mensagem
+    mov esi, [esp+4]  ; endereço da mensagem
+    mov ecx,0xffff ; tamanho da mensagem
+    cld
+    mov eax,0
+    strcats4:
+        repnz
+        scasb
+    mov eax,0xffff
+    clc
+    sub eax,ecx
+    
+    mov ebx,[esp+4]
+    add eax,ebx
+    dec eax
+    mov [esp+4],eax 
+    
+    mov edi, [esp+8]  ; endereço da mensagem
+    mov esi, [esp+8]  ; endereço da mensagem
+    mov ecx,0xffff ; tamanho da mensagem
+    cld
+    mov eax,0
+    strcats5:
+        repnz
+        scasb
+    mov eax,0xffff
+    clc
+    sub eax,ecx
+    mov ecx,eax
+    cmp ecx,0
+    jz strcats3
     mov esi, [esp+8]  ; endereço da mensagem
     mov edi, [esp+4]  ; endereço da mensagem
     strcats2:
-        mov al,[edi]
-        inc edi
-        cmp al,0
-        jnz strcats2
-     dec edi
-     strcats3:
-        mov al,[esi]
-        mov [edi],al
-        inc esi
-        inc edi
-        cmp al,0
-        jnz strcats3
+       rep
+       movsb
+    strcats3:
     ret
     
 strcps:
@@ -150,7 +172,7 @@ strcps:
     sub eax,ecx
     mov ecx,eax
     cmp ecx,0
-    jz strcps2
+    jz strcps3
     mov esi, [esp+8]  ; endereço da mensagem
     mov edi, [esp+4]  ; endereço da mensagem
     strcps2:
