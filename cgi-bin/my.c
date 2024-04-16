@@ -1,3 +1,4 @@
+extern void clearss();
 extern void putss(char *msg);
 extern void prints(char *msg);
 extern void fputss(char *msg,int handler );
@@ -28,6 +29,7 @@ int main(){
    int rets = 0;
    int outs=getout();
    int ins=getin();
+   clearss();
    memfills(msgd2,1000,'\0');
    strcps(msgd2,msgd);
    strcats(msgd2,msgd3);

@@ -19,6 +19,7 @@ global openss
 global getreadss
 global getwritess
 global getreadwritess
+global clearss
 ;nasm -felf32 -o hello.o hello.asm
 ;gcc hello.o -o hello.elf -nostdlib
 section .text
@@ -252,6 +253,13 @@ prints:
     mov edx, 1  ; tamanho da mensagem
     int 0x80          ; chama a interrupção do sistema
     ret
+clearss:
+    mov edx,2
+    mov eax, 4        ; syswrite
+    mov ebx, 1        ; stdout
+    mov ecx, clearsss ; endereço da mensagem
+    int 0x80          ; chama a interrupção do sistema
+    ret
 putss:
     mov edi, [esp+4]  ; endereço da mensagem
     mov esi, [esp+4]  ; endereço da mensagem
@@ -283,3 +291,4 @@ readsss: dd 0
 writesss: dd 1
 readwritesss: dd 2
 enters: db 10
+clearsss: db 27,"c",0
