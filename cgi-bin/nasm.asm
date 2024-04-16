@@ -85,12 +85,10 @@ memfills:
     mov al, [esp+12] ;char
     cmp ecx,0
     jz memfills3
+    cld
     memfills2:
-        mov [edi],al
-        inc edi
-        dec ecx
-        cmp ecx,0
-        jnz memfills2
+        rep
+        stosb
     memfills3:
     ret
 memcps:
@@ -117,6 +115,8 @@ strncps:
         rep
         movsb
     strncps3:
+    mov al,0
+    mov [edi],al
     ret
 strcats:
     mov edi, [esp+4]  ; endereço da mensagem
@@ -152,6 +152,7 @@ strcats:
     jz strcats3
     mov esi, [esp+8]  ; endereço da mensagem
     mov edi, [esp+4]  ; endereço da mensagem
+    cld
     strcats2:
        rep
        movsb
@@ -175,6 +176,7 @@ strcps:
     jz strcps3
     mov esi, [esp+8]  ; endereço da mensagem
     mov edi, [esp+4]  ; endereço da mensagem
+    cld
     strcps2:
        rep
        movsb

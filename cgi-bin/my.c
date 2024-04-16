@@ -28,6 +28,7 @@ int main(){
    int rets = 0;
    int outs=getout();
    int ins=getin();
+   memfills(msgd2,1000,'\0');
    strcps(msgd2,msgd);
    strcats(msgd2,msgd3);
    sizes = strlens(msgd2);
