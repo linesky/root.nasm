@@ -192,6 +192,7 @@ strlens:
     mov eax,0xffff
     clc
     sub eax,ecx
+    dec eax
     ret
     ; Código de exemplo: imprimir uma mensagem
 writess:
