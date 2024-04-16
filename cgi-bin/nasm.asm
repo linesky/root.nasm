@@ -97,6 +97,7 @@ memcps:
     mov esi, [esp+8]  ; endereço da mensagem
     mov edi, [esp+4]  ; endereço da mensagem
     mov ecx, [esp+12] ;size
+    
     cmp ecx,0
     jz strncps3
     memcps2:
@@ -115,16 +116,11 @@ strncps:
     mov ecx, [esp+12] ;size
     cmp ecx,0
     jz strncps3
+    cld
     strncps2:
-        mov al,[esi]
-        mov [edi],al
-        inc esi
-        inc edi
-        dec ecx
-        cmp ecx,0
-        jnz strncps2
-    mov al,0
-    mov [edi],al
+    
+        rep
+        movsb
     strncps3:
     ret
 strcats:
@@ -157,16 +153,17 @@ strcps:
         jnz strcps2
     ret
 strlens:
-    mov ebx, [esp+4]  ; endereço da mensagem
-    mov ecx,0 ; tamanho da mensagem
-    dec ecx
+    mov edi, [esp+4]  ; endereço da mensagem
+    mov esi, [esp+4]  ; endereço da mensagem
+    mov ecx,0xffff ; tamanho da mensagem
+    cld
+    mov eax,0
     strlens2:
-        mov al,[ebx]
-        inc ebx
-        inc ecx
-        cmp al,0
-        jnz strlens2
-    mov eax,ecx
+        repnz
+        scasb
+    mov eax,0xffff
+    clc
+    sub eax,ecx
     ret
     ; Código de exemplo: imprimir uma mensagem
 writess:
