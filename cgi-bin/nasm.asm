@@ -101,13 +101,8 @@ memcps:
     cmp ecx,0
     jz strncps3
     memcps2:
-        mov al,[esi]
-        mov [edi],al
-        inc esi
-        inc edi
-        dec ecx
-        cmp ecx,0
-        jnz memcps2
+        rep
+        movsb
     memcps3:
     ret
 strncps:
@@ -142,15 +137,26 @@ strcats:
     ret
     
 strcps:
+    mov edi, [esp+8]  ; endereço da mensagem
+    mov esi, [esp+8]  ; endereço da mensagem
+    mov ecx,0xffff ; tamanho da mensagem
+    cld
+    mov eax,0
+    strcps4:
+        repnz
+        scasb
+    mov eax,0xffff
+    clc
+    sub eax,ecx
+    mov ecx,eax
+    cmp ecx,0
+    jz strcps2
     mov esi, [esp+8]  ; endereço da mensagem
     mov edi, [esp+4]  ; endereço da mensagem
     strcps2:
-        mov al,[esi]
-        mov [edi],al
-        inc esi
-        inc edi
-        cmp al,0
-        jnz strcps2
+       rep
+       movsb
+    strcps3:
     ret
 strlens:
     mov edi, [esp+4]  ; endereço da mensagem

@@ -21,14 +21,14 @@ extern int getreadwritess();
 extern int strchrreplace(char *msg,char msg2,char msg3);
  
 int main(){
-   char *msgd="\x1b[43;37mfile my.txt1234567890";
+   char *msgd="\x1b[43;37mfile my.txt1234567890\n";
    char msgd2[1080];
    int sizes = strlens(msgd);
    int rets = 0;
    int outs=getout();
    int ins=getin();
-   strncps(msgd2,msgd,sizes+1);
-   putss(msgd2,sizes-10);
+   strcps(msgd2,msgd);
+   putss(msgd2,sizes-1);
    exitss(rets);
    return 0;
    
