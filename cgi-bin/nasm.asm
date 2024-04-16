@@ -9,9 +9,52 @@ global strncps
 global memcps
 global prints
 global memfills
+global getout
+global getin
+global fgetss
+global creatss
+global closess
+global strchrreplace
 ;nasm -felf32 -o hello.o hello.asm
 ;gcc hello.o -o hello.elf -nostdlib
 section .text
+closess:
+    mov eax, 6        ; syswrite
+    mov ebx, [esp+4]  ; stdout
+    int 0x80          ; chama a interrupção do sistema
+    ret
+creatss:
+    mov eax, 8        ; syswrite
+    mov ebx, [esp+4]  ; stdout
+    mov ecx, [esp+8] ; endereço da mensagem
+    int 0x80          ; chama a interrupção do sistema
+    ret
+getin:
+    mov ebx,stdinss
+    mov eax,[ebx]
+    ret
+getout:
+    mov ebx,stdoutss
+    mov eax,[ebx]
+    ret
+strchrreplace:
+    
+    mov edi, [esp+4]  ; endereço da mensagem
+    mov ah, [esp+8] ;char
+    mov bl, [esp+12] ;char
+
+    strchrreplace2:
+        mov al,[edi]
+        cmp al,ah
+        jnz strchrreplace3
+        mov [edi],bl
+        strchrreplace3:
+        inc edi
+        dec ecx
+        cmp al,0
+        jnz strchrreplace2
+    
+    ret    
 memfills:
     
     mov edi, [esp+4]  ; endereço da mensagem
@@ -110,6 +153,13 @@ writess:
     mov edx, [esp+8]  ; tamanho da mensagem
     int 0x80          ; chama a interrupção do sistema
     ret
+fgetss:
+    mov eax, 3        ; sysread
+    mov ebx, [esp+12]  ; stdin
+    mov ecx, [esp+4] ; endereço da mensagem
+    mov edx, [esp+8]  ; tamanho da mensagem
+    int 0x80          ; chama a interrupção do sistema
+    ret
 fputss:
     mov eax, 4        ; syswrite
     mov ebx, [esp+12]  ; stdout
@@ -143,5 +193,6 @@ exitss:    ; Finalização do programa
     ret
 section .data
 db 0
-stdouts: dd 1
+stdoutss: dd 1
+stdinss: dd 2
 enters: db 10

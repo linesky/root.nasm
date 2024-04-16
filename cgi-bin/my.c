@@ -1,7 +1,10 @@
 extern void putss(char *msg,int sizes );
 extern void prints(char *msg,int sizes );
 extern void fputss(char *msg,int sizes,int handler );
+extern void fgetss(char *msg,int sizes,int handler );
 extern void writess(char *msg,int sizes,int handler );
+extern int creatss(char *msg,int acesss );
+extern int closess(int handler );
 extern int strlens(char *msg);
 extern int strcps(char *msg,char *msg2);
 extern int strncps(char *msg,char *msg2,int counts);
@@ -9,17 +12,24 @@ extern int strcats(char *msg,char *msg2);
 extern void exitss(int codes);
 extern int memcps(char *msg,char *msg2,int counts);
 extern int memfills(char *msg,int counts,char msg2);
-int stdouts=1;
+extern int getout();
+extern int getin();
+extern int strchrreplace(char *msg,char msg2,char msg3);
+ 
 int main(){
-   char *msgd="\x1b[43;37m";
+   char *msgd="\x1b[43;37mfile my.txt.\n";
+   char *files="my.txt";
+   int f1=0;
    char msgd2[1080];
    int sizes = strlens(msgd);
-   prints(msgd,sizes);
    int rets = 0;
+   int outs=getout();
+   int ins=getin();
    prints(msgd,sizes);
-   sizes = 80;
-   memfills(msgd2,sizes,'*');
-   prints(msgd2,sizes);
+   memfills(msgd2,82,'*');
+   f1=creatss(files,0777);
+   fputss(msgd2,80,f1);
+   closess(f1);
    exitss(rets);
    return 0;
    
