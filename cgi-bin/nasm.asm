@@ -20,6 +20,8 @@ global getreadss
 global getwritess
 global getreadwritess
 global clearss
+global getesp
+global strs
 ;nasm -felf32 -o hello.o hello.asm
 ;gcc hello.o -o hello.elf -nostdlib
 section .text
@@ -40,6 +42,10 @@ creatss:
     mov ebx, [esp+4]  ; stdout
     mov ecx, [esp+8] ; endereço da mensagem
     int 0x80          ; chama a interrupção do sistema
+    ret
+getesp:
+    
+    mov eax,esp
     ret
 getin:
     mov ebx,stdinss
@@ -283,6 +289,37 @@ exitss:    ; Finalização do programa
     mov ebx,[esp+4]      ; código de saída 0
     int 0x80          ; chama a interrupção do sistema
     ret
+strs:
+          mov eax,[esp+4]
+          mov edi,[esp+8]
+          push ebp
+          mov ebp,1000000000
+          STR321:                
+                    xor edx,edx
+                    xor ecx,ecx
+                    mov ebx,ebp
+                    clc                 
+                    div ebx                
+                    mov esi,edx
+                    mov ah,'0'
+                    clc                
+                    add al,ah
+                    mov [edi],al
+                    inc di                
+                    mov eax,ebp
+                    xor edx,edx
+                    xor ecx,ecx
+                    mov ebx,10
+                    clc                
+                    div ebx                
+                    mov ebp,eax
+                    mov eax,esi
+                    cmp ebp,0
+                    JNZ STR321
+             mov al,0
+             mov [edi],al       
+             pop ebp
+             ret
 section .data
 db 0
 stdoutss: dd 1
