@@ -305,7 +305,7 @@ strs:
                     clc                
                     add al,ah
                     mov [edi],al
-                    inc di                
+                    inc edi                
                     mov eax,ebp
                     xor edx,edx
                     xor ecx,ecx
